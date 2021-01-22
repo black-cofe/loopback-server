@@ -1,42 +1,34 @@
 {
-  "name": "leaders",
+  "name": "Comment",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "mixins": {
-    "TimeStamp": true
-  },
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "image": {
-      "type": "string",
-      "required": true
-    },
-    "designation": {
-      "type": "string",
-      "required": true
-    },
-    "abbr": {
-      "type": "string",
-      "required": true
-    },
-    "description": {
-      "type": "string",
-      "required": true
-    },
-    "featured": {
-      "type": "boolean",
+    "rating": {
+      "type": "number",
       "required": true,
-      "default": false
+      "default": 5
+    },
+    "comment": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "dishes": {
+      "type": "belongsTo",
+      "model": "dishes",
+      "foreignKey": ""
+    },
+    "customer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "customerId"
+    }
+  },
   "acls": [
     {
       "accessType": "*",
@@ -45,22 +37,22 @@
       "permission": "DENY"
     },
     {
-      "accessType": "READ",
+      "accessType": "WRITE",
       "principalType": "ROLE",
-      "principalId": "$everyone",
+      "principalId": "$owner",
       "permission": "ALLOW"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "create"
     },
     {
-      "accessType": "WRITE",
+      "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "$authenticated",
       "permission": "ALLOW"
     }
   ],
